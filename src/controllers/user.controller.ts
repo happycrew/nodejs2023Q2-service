@@ -1,14 +1,17 @@
 import {
+  Body,
   Controller,
   Get,
   HttpException,
   HttpStatus,
   Param,
   ParseUUIDPipe,
+  Post,
 } from '@nestjs/common';
 import { User } from '../db/types';
 import { AppService } from 'src/app.service';
-import { isUUID } from 'class-validator';
+import { CreateUserDto } from 'src/db/interfaces';
+import { v4 } from 'uuid';
 
 @Controller('user')
 export class UserController {
@@ -29,5 +32,26 @@ export class UserController {
       );
     }
     return user;
+  }
+
+  @Post()
+  createUser(@Body() newUser: CreateUserDto): User {
+    const { login, password } = newUser;
+    const isValudUser =
+      typeof login === 'string' && typeof password === 'string';
+    if (!isValudUser)
+      throw new HttpException(
+        'Request body does not contain required fields',
+        HttpStatus.BAD_REQUEST,
+      );
+    const user: User = {
+      id: v4(),
+      login: newUser.login,
+      password: newUser.password,
+      version: 1,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+    return this.appService.userService.create(user);
   }
 }

@@ -1,6 +1,4 @@
-import { InMemoryDBEntity } from '@nestjs-addons/in-memory-db';
-
-export type User = InMemoryDBEntity & {
+export type User = {
   id: string;
   login: string;
   password: string;
@@ -9,13 +7,13 @@ export type User = InMemoryDBEntity & {
   updatedAt: number;
 };
 
-export type Artist = InMemoryDBEntity & {
+export type Artist = {
   id: string;
   name: string;
   grammy: boolean;
 };
 
-export type Track = InMemoryDBEntity & {
+export type Track = {
   id: string;
   name: string;
   artistId: string | null;
@@ -23,14 +21,14 @@ export type Track = InMemoryDBEntity & {
   duration: number;
 };
 
-export type Album = InMemoryDBEntity & {
+export type Album = {
   id: string;
   name: string;
   year: number;
   artistId: string | null;
 };
 
-export type Favorites = InMemoryDBEntity & {
+export type Favorites = {
   artists: string[];
   albums: string[];
   tracks: string[];
