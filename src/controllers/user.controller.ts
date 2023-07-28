@@ -8,7 +8,7 @@ import {
   ParseUUIDPipe,
   Post,
 } from '@nestjs/common';
-import { User } from '../db/types';
+import { User } from '../types/types';
 import { AppService } from 'src/app.service';
 import { CreateUserDto } from 'src/db/interfaces';
 import { v4 } from 'uuid';
