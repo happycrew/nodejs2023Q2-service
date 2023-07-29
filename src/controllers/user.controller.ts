@@ -6,6 +6,7 @@ import {
   Get,
   HttpCode,
   HttpException,
+  NotFoundException,
   Param,
   ParseUUIDPipe,
   Post,
@@ -32,7 +33,7 @@ export class UserController {
     const user = this.userService.getUser(id);
 
     if (!user) {
-      throw new HttpException(`User with this id - ${id} - doesn't exist`, 404);
+      throw new NotFoundException(`User with this id - ${id} - doesn't exist`);
     }
     return user;
   }
@@ -40,14 +41,11 @@ export class UserController {
   @Post()
   createUser(@Body() userData: CreateUserDto) {
     const { login, password } = userData;
-    const isValidUser =
+    const isValidUser: boolean =
       typeof login === 'string' && typeof password === 'string';
 
     if (!isValidUser) {
-      throw new HttpException(
-        'Request body does not contain required fields',
-        400,
-      );
+      throw new BadRequestException('Required fields not filled');
     }
 
     return this.userService.addNewUser(userData);
@@ -59,7 +57,7 @@ export class UserController {
     if (!isUUID(id, 4)) throw new BadRequestException('Invalid user id');
     const user = this.userService.getUser(id);
     if (!user) {
-      throw new HttpException(`User with this id - ${id} - doesn't exist`, 404);
+      throw new NotFoundException(`User with this id - ${id} - doesn't exist`);
     }
     this.userService.deleteUser(id);
     return;

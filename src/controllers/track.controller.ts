@@ -1,12 +1,15 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
-  HttpException,
+  NotFoundException,
   Param,
+  Post,
 } from '@nestjs/common';
 import { isUUID } from 'class-validator';
 import { TrackService } from 'src/services/track.service';
+import { CreateTrackDto } from 'src/types/interfaces';
 import { Track } from 'src/types/types';
 
 @Controller('track')
@@ -25,11 +28,22 @@ export class TrackController {
     const track = this.trackService.getTrack(id);
 
     if (!track) {
-      throw new HttpException(
-        `Track with this id - ${id} - doesn't exist`,
-        404,
-      );
+      throw new NotFoundException(`Track with this id - ${id} - doesn't exist`);
     }
     return track;
+  }
+
+  @Post()
+  createTrack(@Body() trackData: CreateTrackDto): Track {
+    const { name, duration } = trackData;
+
+    const isValidTrack: boolean =
+      typeof name === 'string' && typeof duration === 'number';
+
+    if (!isValidTrack) {
+      throw new BadRequestException('Required fields not filled');
+    }
+
+    return this.trackService.addNewTrack(trackData);
   }
 }

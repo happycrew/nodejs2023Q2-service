@@ -15,3 +15,10 @@ export interface FavoritesResponse {
   albums: Album[];
   tracks: Track[];
 }
+
+export interface CreateTrackDto {
+  name: string;
+  duration: number;
+  artistId: string | null;
+  albumId: string | null;
+}

@@ -24,7 +24,7 @@ export class DBService {
     this.users.splice(idUser, 1);
   }
 
-  updateUserPassword(userData: User, id: string) {
+  updateUserPassword(userData: User, id: string): void {
     const idUser = this.users.findIndex((user) => user.id === id);
     this.users[idUser] = userData;
   }
@@ -36,5 +36,9 @@ export class DBService {
   getTrack(id: string): Track {
     const trackId = this.tracks.findIndex((track) => track.id === id);
     return this.tracks[trackId];
+  }
+
+  addNewTrack(newTrack: Track): void {
+    this.tracks.push(newTrack);
   }
 }

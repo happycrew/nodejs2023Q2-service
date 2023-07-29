@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DBService } from 'src/db/db.service';
+import { CreateTrackDto } from 'src/types/interfaces';
 import { Track } from 'src/types/types';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class TrackService {
@@ -12,5 +14,18 @@ export class TrackService {
 
   getTrack(id: string): Track {
     return this.database.getTrack(id);
+  }
+
+  addNewTrack(trackData: CreateTrackDto): Track {
+    const track = {
+      id: v4(),
+      name: trackData.name,
+      duration: trackData.duration,
+      artistId: trackData.albumId,
+      albumId: trackData.albumId,
+    };
+
+    this.database.addNewTrack(track);
+    return track;
   }
 }
