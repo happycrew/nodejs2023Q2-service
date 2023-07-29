@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/types/types';
+import { Track, User } from 'src/types/types';
 
 @Injectable()
 export class DBService {
   private readonly users: User[] = [];
+  private readonly tracks: Track[] = [];
 
   getUsers(): User[] {
     return this.users;
@@ -26,5 +27,14 @@ export class DBService {
   updateUserPassword(userData: User, id: string) {
     const idUser = this.users.findIndex((user) => user.id === id);
     this.users[idUser] = userData;
+  }
+
+  getTracks(): Track[] {
+    return this.tracks;
+  }
+
+  getTrack(id: string): Track {
+    const trackId = this.tracks.findIndex((track) => track.id === id);
+    return this.tracks[trackId];
   }
 }

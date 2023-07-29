@@ -26,7 +26,7 @@ export class UserController {
   }
 
   @Get(':id')
-  getUser(@Param('id', new ParseUUIDPipe()) id: string): User {
+  getUser(@Param('id') id: string): User {
     if (!isUUID(id, 4)) throw new BadRequestException('Invalid user id');
 
     const user = this.userService.getUser(id);
