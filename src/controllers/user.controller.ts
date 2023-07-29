@@ -10,9 +10,10 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { User } from '../types/types';
-import { CreateUserDto } from 'src/types/interfaces';
+import { CreateUserDto, UpdatePasswordDto } from 'src/types/interfaces';
 import { UserService } from 'src/services/user.service';
 import { isUUID } from 'class-validator';
 
@@ -55,7 +56,7 @@ export class UserController {
 
   @Delete(':id')
   @HttpCode(204)
-  deleteUser(@Param('id', new ParseUUIDPipe()) id: string) {
+  deleteUser(@Param('id') id: string) {
     if (!isUUID(id, 4)) throw new BadRequestException('Invalid user id');
     const user = this.userService.getUser(id);
     if (!user) {
@@ -63,5 +64,13 @@ export class UserController {
     }
     this.userService.deleteUser(id);
     return;
+  }
+
+  @Put(':id')
+  updatePassword(
+    @Body() updatePass: UpdatePasswordDto,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return this.userService.updateUserPassword(updatePass, id);
   }
 }

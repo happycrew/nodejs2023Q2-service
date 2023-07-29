@@ -10,7 +10,8 @@ export class DBService {
   }
 
   getUser(id: string): User {
-    return this.users.find((user) => user.id === id);
+    const userId = this.users.findIndex((user) => user.id === id);
+    return this.users[userId];
   }
 
   addNewUser(newUser: User): void {
@@ -20,5 +21,10 @@ export class DBService {
   deleteUser(id: string): void {
     const idUser = this.users.findIndex((user) => user.id === id);
     this.users.splice(idUser, 1);
+  }
+
+  updateUserPassword(userData: User, id: string) {
+    const idUser = this.users.findIndex((user) => user.id === id);
+    this.users[idUser] = userData;
   }
 }

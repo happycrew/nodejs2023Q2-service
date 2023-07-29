@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DBService } from 'src/db/db.service';
-import { CreateUserDto } from 'src/types/interfaces';
+import { CreateUserDto, UpdatePasswordDto } from 'src/types/interfaces';
 import { User } from 'src/types/types';
 import { v4 } from 'uuid';
 
@@ -34,5 +39,34 @@ export class UserService {
 
   deleteUser(id: string): void {
     this.database.deleteUser(id);
+  }
+
+  updateUserPassword(updatePass: UpdatePasswordDto, id: string) {
+    const user = this.database.getUser(id);
+
+    const checkPasswords = !updatePass.newPassword || !updatePass.oldPassword;
+    if (checkPasswords) {
+      throw new BadRequestException('No passwords here');
+    }
+
+    if (!user) {
+      throw new NotFoundException(`User with id - ${id} doens't exist`);
+    }
+
+    if (updatePass.oldPassword !== user.password) {
+      throw new HttpException('Password mismatch', 403);
+    }
+
+    const newUser: User = {
+      ...user,
+      password: updatePass.newPassword,
+      version: ++user.version,
+      updatedAt: Date.now(),
+    };
+
+    const { password, ...userWithoutPass } = newUser;
+
+    this.database.updateUserPassword(newUser, id);
+    return userWithoutPass;
   }
 }
