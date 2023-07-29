@@ -6,7 +6,6 @@ import {
   Get,
   HttpCode,
   HttpException,
-  HttpStatus,
   Param,
   ParseUUIDPipe,
   Post,
