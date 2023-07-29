@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { DBModule } from 'src/db/db.module';
-import { TrackService } from 'src/services/trask.service';
+import { TrackService } from 'src/services/track.service';
 
 @Module({
   imports: [DBModule],
