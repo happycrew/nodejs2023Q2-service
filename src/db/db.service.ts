@@ -41,4 +41,9 @@ export class DBService {
   addNewTrack(newTrack: Track): void {
     this.tracks.push(newTrack);
   }
+
+  deleteTrack(id: string): void {
+    const trackId = this.tracks.findIndex((track) => track.id === id);
+    this.tracks.splice(trackId, 1);
+  }
 }

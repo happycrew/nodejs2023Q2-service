@@ -28,4 +28,8 @@ export class TrackService {
     this.database.addNewTrack(track);
     return track;
   }
+
+  deleteTrack(id: string): void {
+    this.database.deleteTrack(id);
+  }
 }

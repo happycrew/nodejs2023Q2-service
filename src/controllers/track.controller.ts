@@ -2,7 +2,9 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   NotFoundException,
   Param,
   Post,
@@ -45,5 +47,19 @@ export class TrackController {
     }
 
     return this.trackService.addNewTrack(trackData);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  deleteTrack(@Param('id') id: string): void {
+    if (!isUUID(id, 4)) throw new BadRequestException('Invalid track id');
+    const track = this.trackService.getTrack(id);
+
+    if (!track) {
+      throw new NotFoundException(`Track with id - ${id} doesn't exist`);
+    }
+
+    this.trackService.deleteTrack(id);
+    return;
   }
 }
