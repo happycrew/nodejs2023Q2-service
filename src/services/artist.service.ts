@@ -26,4 +26,8 @@ export class ArtistService {
     this.database.addNewArtist(artist);
     return artist;
   }
+
+  deleteArtist(id: string): void {
+    this.database.deleteArtist(id);
+  }
 }

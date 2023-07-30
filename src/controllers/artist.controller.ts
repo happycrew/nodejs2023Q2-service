@@ -2,7 +2,9 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   NotFoundException,
   Param,
   Post,
@@ -39,5 +41,16 @@ export class ArtistController {
     if (!isValidData)
       throw new BadRequestException('Required fields not filled');
     return this.artistService.addNewArtist(artistData);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  deleteArtist(@Param('id') id: string) {
+    const artist = this.artistService.getArtist(id);
+    if (!artist)
+      throw new NotFoundException(`Artist with id - ${id} doesn't exist`);
+
+    this.artistService.deleteArtist(id);
+    return;
   }
 }

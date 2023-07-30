@@ -65,4 +65,9 @@ export class DBService {
   addNewArtist(newArtist: Artist): void {
     this.artists.push(newArtist);
   }
+
+  deleteArtist(id: string): void {
+    const artistId = this.artists.findIndex((artist) => artist.id === id);
+    this.artists.splice(artistId, 1);
+  }
 }
