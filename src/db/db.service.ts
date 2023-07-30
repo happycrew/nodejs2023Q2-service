@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Artist, Track, User } from 'src/types/types';
+import { deleteMusic } from 'src/utils/deleteMusic';
 
 @Injectable()
 export class DBService {
@@ -69,5 +70,12 @@ export class DBService {
   deleteArtist(id: string): void {
     const artistId = this.artists.findIndex((artist) => artist.id === id);
     this.artists.splice(artistId, 1);
+
+    deleteMusic(this.tracks, id);
+  }
+
+  updateArtist(artistData: Artist, id: string): void {
+    const artistId = this.artists.findIndex((artist) => artist.id === id);
+    this.artists[artistId] = artistData;
   }
 }

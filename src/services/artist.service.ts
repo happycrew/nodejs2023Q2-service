@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DBService } from 'src/db/db.service';
 import { CreateArtistDto } from 'src/types/interfaces';
 import { Artist } from 'src/types/types';
@@ -29,5 +29,16 @@ export class ArtistService {
 
   deleteArtist(id: string): void {
     this.database.deleteArtist(id);
+  }
+
+  updateArtist(artistData: CreateArtistDto, artistId?: string): Artist {
+    const artist = this.database.getArtist(artistId);
+
+    if (!artist)
+      throw new NotFoundException(`Artist with id - ${artistId} not found`);
+    // const { id } = artist;
+    const newArtist = { ...artist, ...artistData };
+    this.database.updateArtist(newArtist, artistId);
+    return newArtist;
   }
 }
