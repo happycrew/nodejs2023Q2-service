@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Artist, Track, User } from 'src/types/types';
+import { Album, Artist, Track, User } from 'src/types/types';
 import { deleteMusic } from 'src/utils/deleteMusic';
 
 @Injectable()
@@ -7,6 +7,7 @@ export class DBService {
   private readonly users: User[] = [];
   private readonly tracks: Track[] = [];
   private readonly artists: Artist[] = [];
+  private readonly albums: Album[] = [];
 
   getUsers(): User[] {
     return this.users;
@@ -77,5 +78,9 @@ export class DBService {
   updateArtist(artistData: Artist, id: string): void {
     const artistId = this.artists.findIndex((artist) => artist.id === id);
     this.artists[artistId] = artistData;
+  }
+
+  getAlbums(): Album[] {
+    return this.albums;
   }
 }
