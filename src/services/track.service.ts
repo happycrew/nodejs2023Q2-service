@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DBService } from 'src/db/db.service';
 import { CreateTrackDto } from 'src/types/interfaces';
 import { Track } from 'src/types/types';
@@ -31,5 +31,14 @@ export class TrackService {
 
   deleteTrack(id: string): void {
     this.database.deleteTrack(id);
+  }
+
+  updateTrack(updateTrack: CreateTrackDto, id: string) {
+    const track = this.database.getTrack(id);
+    if (!track)
+      throw new NotFoundException(`Track with id - ${id} doesn't exist`);
+    const updatedTrack = { ...track, ...updateTrack };
+    this.database.updateTrack(updatedTrack, id);
+    return updatedTrack;
   }
 }

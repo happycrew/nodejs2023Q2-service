@@ -7,7 +7,9 @@ import {
   HttpCode,
   NotFoundException,
   Param,
+  ParseUUIDPipe,
   Post,
+  Put,
 } from '@nestjs/common';
 import { isUUID } from 'class-validator';
 import { TrackService } from 'src/services/track.service';
@@ -61,5 +63,28 @@ export class TrackController {
 
     this.trackService.deleteTrack(id);
     return;
+  }
+
+  @Put(':id')
+  updateTrack(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() updateTrack: CreateTrackDto,
+  ): Track {
+    const isCheckProp =
+      !updateTrack.hasOwnProperty('name') ||
+      !updateTrack.hasOwnProperty('duration') ||
+      !updateTrack.hasOwnProperty('albumId') ||
+      !updateTrack.hasOwnProperty('artistId');
+    const isCheckTypes =
+      typeof updateTrack.name !== 'string' ||
+      typeof updateTrack.duration !== 'number' ||
+      typeof updateTrack.albumId === 'number' ||
+      typeof updateTrack.artistId === 'number';
+
+    if (isCheckProp || isCheckTypes) {
+      throw new BadRequestException('Required fields not valid');
+    }
+    const track = this.trackService.updateTrack(updateTrack, id);
+    return track;
   }
 }

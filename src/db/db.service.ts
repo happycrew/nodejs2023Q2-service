@@ -46,4 +46,9 @@ export class DBService {
     const trackId = this.tracks.findIndex((track) => track.id === id);
     this.tracks.splice(trackId, 1);
   }
+
+  updateTrack(trackData: Track, id: string) {
+    const trackId = this.tracks.findIndex((track) => track.id === id);
+    this.tracks[trackId] = trackData;
+  }
 }

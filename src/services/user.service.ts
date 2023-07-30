@@ -32,7 +32,7 @@ export class UserService {
     };
 
     const { password, ...userWithoutPass } = user;
-
+    console.log(password);
     this.database.addNewUser(user);
     return userWithoutPass;
   }
@@ -65,7 +65,7 @@ export class UserService {
     };
 
     const { password, ...userWithoutPass } = newUser;
-
+    console.log(password);
     this.database.updateUserPassword(newUser, id);
     return userWithoutPass;
   }

@@ -5,7 +5,6 @@ import {
   Delete,
   Get,
   HttpCode,
-  HttpException,
   NotFoundException,
   Param,
   ParseUUIDPipe,
