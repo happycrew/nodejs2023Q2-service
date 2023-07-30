@@ -1,12 +1,15 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
   NotFoundException,
   Param,
+  Post,
 } from '@nestjs/common';
 import { isUUID } from 'class-validator';
 import { ArtistService } from 'src/services/artist.service';
+import { CreateArtistDto } from 'src/types/interfaces';
 import { Artist } from 'src/types/types';
 
 @Controller('artist')
@@ -28,5 +31,13 @@ export class ArtistController {
     }
 
     return artist;
+  }
+
+  @Post()
+  addArtist(@Body() artistData: CreateArtistDto) {
+    const isValidData = artistData.name || artistData.grammy;
+    if (!isValidData)
+      throw new BadRequestException('Required fields not filled');
+    return this.artistService.addNewArtist(artistData);
   }
 }

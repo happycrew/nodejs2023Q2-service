@@ -61,4 +61,8 @@ export class DBService {
     const artistId = this.artists.findIndex((artist) => artist.id === id);
     return this.artists[artistId];
   }
+
+  addNewArtist(newArtist: Artist): void {
+    this.artists.push(newArtist);
+  }
 }

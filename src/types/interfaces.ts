@@ -22,3 +22,8 @@ export interface CreateTrackDto {
   artistId: string | null;
   albumId: string | null;
 }
+
+export interface CreateArtistDto {
+  name: string;
+  grammy: boolean;
+}
