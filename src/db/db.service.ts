@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Track, User } from 'src/types/types';
+import { Artist, Track, User } from 'src/types/types';
 
 @Injectable()
 export class DBService {
   private readonly users: User[] = [];
   private readonly tracks: Track[] = [];
+  private readonly artists: Artist[] = [];
 
   getUsers(): User[] {
     return this.users;
@@ -47,8 +48,17 @@ export class DBService {
     this.tracks.splice(trackId, 1);
   }
 
-  updateTrack(trackData: Track, id: string) {
+  updateTrack(trackData: Track, id: string): void {
     const trackId = this.tracks.findIndex((track) => track.id === id);
     this.tracks[trackId] = trackData;
+  }
+
+  getArtists(): Artist[] {
+    return this.artists;
+  }
+
+  getArtist(id: string): Artist {
+    const artistId = this.artists.findIndex((artist) => artist.id === id);
+    return this.artists[artistId];
   }
 }
