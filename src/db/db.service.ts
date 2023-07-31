@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { FavoritesResponse } from 'src/types/interfaces';
 import { Album, Artist, Favorites, Track, User } from 'src/types/types';
 import { deleteMusic } from 'src/utils/deleteMusic';
 
@@ -112,7 +113,8 @@ export class DBService {
   }
 
   getFavs() {
-    const allFavs = { artists: [], tracks: [], albums: [] };
+    const allFavs: FavoritesResponse = { artists: [], tracks: [], albums: [] };
+
     allFavs.artists = this.artists.filter((elem) =>
       this.favorites.artists.includes(elem.id),
     );
@@ -122,6 +124,7 @@ export class DBService {
     allFavs.albums = this.albums.filter((elem) =>
       this.favorites.albums.includes(elem.id),
     );
+
     return allFavs;
   }
 

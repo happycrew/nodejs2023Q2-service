@@ -34,6 +34,7 @@ export class TrackController {
     if (!track) {
       throw new NotFoundException(`Track with this id - ${id} - doesn't exist`);
     }
+
     return track;
   }
 

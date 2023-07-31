@@ -21,7 +21,7 @@ export class TrackService {
       id: v4(),
       name: trackData.name,
       duration: trackData.duration,
-      artistId: trackData.albumId,
+      artistId: trackData.artistId,
       albumId: trackData.albumId,
     };
 
