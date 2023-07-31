@@ -131,4 +131,9 @@ export class DBService {
   addToFavs(id: string, data: string): void {
     this.favorites[data].push(id);
   }
+
+  deleteFromFavs(id: string, data: string): void {
+    const favsId = this.favorites[data].findIndex((elem) => elem.id === id);
+    this.favorites[data].splice(favsId, 1);
+  }
 }
