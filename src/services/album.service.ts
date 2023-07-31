@@ -9,4 +9,8 @@ export class AlbumService {
   getAlbums(): Album[] {
     return this.database.getAlbums();
   }
+
+  getAlbum(id: string): Album {
+    return this.database.getAlbum(id);
+  }
 }

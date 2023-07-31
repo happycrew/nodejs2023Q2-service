@@ -83,4 +83,9 @@ export class DBService {
   getAlbums(): Album[] {
     return this.albums;
   }
+
+  getAlbum(id: string): Album {
+    const albumId = this.albums.findIndex((album) => album.id === id);
+    return this.albums[albumId];
+  }
 }
