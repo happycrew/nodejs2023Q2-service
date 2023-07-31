@@ -34,4 +34,28 @@ export class FavsController {
       );
     this.favsService.addToFavs(id, 'artists');
   }
+
+  @Post('track/:id')
+  @HttpCode(201)
+  addTrackToFavs(@Param('id') id: string) {
+    if (!isUUID(id, 4)) throw new BadRequestException('Invalid track id');
+    const track = this.database.getTrack(id);
+    if (!track)
+      throw new UnprocessableEntityException(
+        `Track with id - ${id} - not found!`,
+      );
+    this.favsService.addToFavs(id, 'tracks');
+  }
+
+  @Post('album/:id')
+  @HttpCode(201)
+  addAlbumToFavs(@Param('id') id: string) {
+    if (!isUUID(id, 4)) throw new BadRequestException('Invalid album id');
+    const album = this.database.getAlbum(id);
+    if (!album)
+      throw new UnprocessableEntityException(
+        `Album with id - ${id} - not found!`,
+      );
+    this.favsService.addToFavs(id, 'albums');
+  }
 }
