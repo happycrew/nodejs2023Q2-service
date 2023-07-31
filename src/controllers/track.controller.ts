@@ -7,7 +7,6 @@ import {
   HttpCode,
   NotFoundException,
   Param,
-  ParseUUIDPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -68,9 +67,10 @@ export class TrackController {
 
   @Put(':id')
   updateTrack(
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('id') id: string,
     @Body() updateTrack: CreateTrackDto,
   ): Track {
+    if (!isUUID(id, 4)) throw new BadRequestException('Invalid track id');
     const isCheckProp =
       !updateTrack.hasOwnProperty('name') ||
       !updateTrack.hasOwnProperty('duration') ||

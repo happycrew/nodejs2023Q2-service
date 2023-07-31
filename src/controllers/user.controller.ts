@@ -7,7 +7,6 @@ import {
   HttpCode,
   NotFoundException,
   Param,
-  ParseUUIDPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -65,8 +64,9 @@ export class UserController {
   @Put(':id')
   updatePassword(
     @Body() updatePass: UpdatePasswordDto,
-    @Param('id', new ParseUUIDPipe()) id: string,
+    @Param('id') id: string,
   ) {
+    if (!isUUID(id, 4)) throw new BadRequestException('Invalid user id');
     return this.userService.updateUserPassword(updatePass, id);
   }
 }
