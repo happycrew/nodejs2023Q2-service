@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Album, Artist, Track, User } from 'src/types/types';
+import { Album, Artist, Favorites, Track, User } from 'src/types/types';
 import { deleteMusic } from 'src/utils/deleteMusic';
 
 @Injectable()
@@ -8,6 +8,11 @@ export class DBService {
   private readonly tracks: Track[] = [];
   private readonly artists: Artist[] = [];
   private readonly albums: Album[] = [];
+  private readonly favorites: Favorites = {
+    artists: [],
+    albums: [],
+    tracks: [],
+  };
 
   getUsers(): User[] {
     return this.users;
@@ -104,5 +109,23 @@ export class DBService {
   updateAlbum(albumData: Album, id: string) {
     const albumId = this.albums.findIndex((album) => album.id === id);
     this.albums[albumId] = albumData;
+  }
+
+  getFavs() {
+    const allFavs = { artists: [], tracks: [], albums: [] };
+    allFavs.artists = this.artists.filter((elem) =>
+      this.favorites.artists.includes(elem.id),
+    );
+    allFavs.tracks = this.tracks.filter((elem) =>
+      this.favorites.tracks.includes(elem.id),
+    );
+    allFavs.albums = this.albums.filter((elem) =>
+      this.favorites.albums.includes(elem.id),
+    );
+    return allFavs;
+  }
+
+  addToFavs(id: string, data: string): void {
+    this.favorites[data].push(id);
   }
 }
