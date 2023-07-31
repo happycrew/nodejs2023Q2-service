@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DBService } from 'src/db/db.service';
 import { CreateAlbumDto } from 'src/types/interfaces';
 import { Album } from 'src/types/types';
@@ -30,5 +30,14 @@ export class AlbumService {
 
   deleteAlbum(id: string): void {
     this.database.deleteAlbum(id);
+  }
+
+  updateAlbum(albumData: CreateAlbumDto, id: string): Album {
+    if (!this.database.getAlbum(id))
+      throw new NotFoundException(`Album with id - ${id} not found`);
+
+    const newAlbum = { ...this.database.getAlbum(id), ...albumData };
+    this.database.updateAlbum(newAlbum, id);
+    return newAlbum;
   }
 }

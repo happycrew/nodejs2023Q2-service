@@ -8,6 +8,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { isUUID } from 'class-validator';
 import { AlbumService } from 'src/services/album.service';
@@ -49,5 +50,25 @@ export class AlbumController {
 
     this.albumService.deleteAlbum(id);
     return;
+  }
+
+  @Put(':id')
+  updateAlbum(@Param('id') id: string, @Body() albumData: CreateAlbumDto) {
+    if (!isUUID(id, 4)) throw new BadRequestException('Invalid album id');
+
+    const isValidData =
+      !albumData.name ||
+      !albumData.year ||
+      !(albumData.artistId === null || typeof albumData.artistId === 'string');
+
+    if (isValidData)
+      throw new BadRequestException('Required fields not filled');
+
+    const newAlbum = this.albumService.updateAlbum(albumData, id);
+
+    if (!newAlbum)
+      throw new NotFoundException(`Album with id - ${id} - not found`);
+
+    return newAlbum;
   }
 }

@@ -97,4 +97,9 @@ export class DBService {
     const albumId = this.albums.findIndex((album) => album.id === id);
     this.albums.splice(albumId, 1);
   }
+
+  updateAlbum(albumData: Album, id: string) {
+    const albumId = this.albums.findIndex((album) => album.id === id);
+    this.albums[albumId] = albumData;
+  }
 }
