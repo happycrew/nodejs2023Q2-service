@@ -73,6 +73,7 @@ export class DBService {
     this.artists.splice(artistId, 1);
 
     deleteMusic(this.tracks, id);
+    deleteMusic(this.albums, id);
   }
 
   updateArtist(artistData: Artist, id: string): void {
@@ -96,6 +97,8 @@ export class DBService {
   deleteAlbum(id: string): void {
     const albumId = this.albums.findIndex((album) => album.id === id);
     this.albums.splice(albumId, 1);
+
+    deleteMusic(this.tracks, id);
   }
 
   updateAlbum(albumData: Album, id: string) {
