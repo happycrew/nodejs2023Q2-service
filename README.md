@@ -8,9 +8,17 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone {https://github.com/Satancrew/nodejs2023Q2-service/tree/develop}
+```
+## Running application
+
+```
+cd ./nodejs2023Q2-service
 ```
 
+```
+git checkout develop
+```
 ## Installing NPM modules
 
 ```
@@ -19,13 +27,14 @@ npm install
 
 ## Running application
 
+Create .env file
+```
+cp .env.example .env
+```
+
 ```
 npm start
 ```
-
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
 ## Testing
 
@@ -43,18 +52,6 @@ To run only one of all test suites
 npm run test -- <path to suite>
 ```
 
-To run all test with authorization
-
-```
-npm run test:auth
-```
-
-To run only specific test suite with authorization
-
-```
-npm run test:auth -- <path to suite>
-```
-
 ### Auto-fix and format
 
 ```
@@ -70,3 +67,7 @@ npm run format
 Press <kbd>F5</kbd> to debug.
 
 For more information, visit: https://code.visualstudio.com/docs/editor/debugging
+
+After starting the app on port (4000 as default) you can open
+in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
+For more information about OpenAPI/Swagger please visit https://swagger.io/.
