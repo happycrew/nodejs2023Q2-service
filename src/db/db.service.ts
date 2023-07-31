@@ -88,4 +88,8 @@ export class DBService {
     const albumId = this.albums.findIndex((album) => album.id === id);
     return this.albums[albumId];
   }
+
+  addNewAlbum(newAlbum: Album): void {
+    this.albums.push(newAlbum);
+  }
 }

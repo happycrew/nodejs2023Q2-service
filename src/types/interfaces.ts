@@ -27,3 +27,9 @@ export interface CreateArtistDto {
   name: string;
   grammy: boolean;
 }
+
+export interface CreateAlbumDto {
+  year: number;
+  name: string;
+  artistId: string | null;
+}

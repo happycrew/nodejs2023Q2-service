@@ -1,12 +1,15 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
   NotFoundException,
   Param,
+  Post,
 } from '@nestjs/common';
 import { isUUID } from 'class-validator';
 import { AlbumService } from 'src/services/album.service';
+import { CreateAlbumDto } from 'src/types/interfaces';
 import { Album } from 'src/types/types';
 
 @Controller('album')
@@ -24,5 +27,13 @@ export class AlbumController {
     const album = this.albumService.getAlbum(id);
     if (!album) throw new NotFoundException(`Album with id - ${id} not found`);
     return album;
+  }
+
+  @Post()
+  addAlbum(@Body() albumData: CreateAlbumDto): Album {
+    if (!albumData.name || !albumData.year)
+      throw new BadRequestException('Required fields not filled');
+
+    return this.albumService.addNewAlbum(albumData);
   }
 }

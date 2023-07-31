@@ -36,7 +36,6 @@ export class ArtistService {
 
     if (!artist)
       throw new NotFoundException(`Artist with id - ${artistId} not found`);
-    // const { id } = artist;
     const newArtist = { ...artist, ...artistData };
     this.database.updateArtist(newArtist, artistId);
     return newArtist;
