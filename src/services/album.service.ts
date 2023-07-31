@@ -27,4 +27,8 @@ export class AlbumService {
     this.database.addNewAlbum(album);
     return album;
   }
+
+  deleteAlbum(id: string): void {
+    this.database.deleteAlbum(id);
+  }
 }

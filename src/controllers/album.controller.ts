@@ -2,7 +2,9 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   NotFoundException,
   Param,
   Post,
@@ -35,5 +37,17 @@ export class AlbumController {
       throw new BadRequestException('Required fields not filled');
 
     return this.albumService.addNewAlbum(albumData);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  deleteAlbum(@Param('id') id: string): void {
+    if (!isUUID(id, 4)) throw new BadRequestException('Invalid album id');
+    const album = this.albumService.getAlbum(id);
+    if (!album)
+      throw new NotFoundException(`Album with id - ${id} - not found`);
+
+    this.albumService.deleteAlbum(id);
+    return;
   }
 }

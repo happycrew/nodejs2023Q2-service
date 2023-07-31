@@ -92,4 +92,9 @@ export class DBService {
   addNewAlbum(newAlbum: Album): void {
     this.albums.push(newAlbum);
   }
+
+  deleteAlbum(id: string): void {
+    const albumId = this.albums.findIndex((album) => album.id === id);
+    this.albums.splice(albumId, 1);
+  }
 }
