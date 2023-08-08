@@ -1,0 +1,8 @@
+version: '3.5'
+
+services:
+  test:
+    build:
+      dockerfile: dockerfile
+    ports: 
+    - "3000:3000"
