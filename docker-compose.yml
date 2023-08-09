@@ -1,0 +1,13 @@
+version: '3.5'
+name: rest-service-week2
+
+services:
+  database:
+    image: postgres:15.3
+    environment:
+      - POSTGRES_DB=${POSTGR_NAME}
+      - POSTGRES_USER=${POSTGR_USER}
+      - POSTGRES_PASSWORD=${POSTGR_PASSWORD}
+    ports:
+      - ${POSTGR_PORT}:5432
+    restart: always
